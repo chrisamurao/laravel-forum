@@ -19,16 +19,14 @@ class ReadThreadsTest extends TestCase
     /** @test */
     public function a_user_can_read_a_single_thread()
     {
-        $response = $this->get('/threads');
+        $response = $this->get($this->thread->path());
         $response->assertSee($this->thread->title);
     }
 
     /** @test */
     public function a_user_can_view_all_threads()
     {
-        $thread = factory('App\Thread')->create();
-
-        $response = $this->get('/threads/' . $this->thread->id);
+        $response = $this->get('/threads');
         $response->assertSee($this->thread->title);
     }
 
@@ -40,7 +38,7 @@ class ReadThreadsTest extends TestCase
         // When we visit a thread page
         // Then we should see the replies
 
-        $this->get('/threads/' . $this->thread->id)
+        $this->get($this->thread->path())
             ->assertSee($reply->body);
 
     }
