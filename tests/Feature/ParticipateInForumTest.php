@@ -9,15 +9,14 @@ class ParticipateInForumTest extends TestCase
 {
     use DatabaseMigrations;
 
-//    /** @test */
-//    function unauthenticated_users_may_not_add_replies()
-//    {
-////        https://laracasts.com/series/lets-build-a-forum-with-laravel/episodes/4
-////        $this->expectException('Illuminate\Auth\AuthenticationException');
-//        $thread = factory('App\Thread')->create();
-//        $reply = factory('App\Reply')->create();
-//        $this->post($thread->path() . '/replies', $reply->toArray());
-//    }
+    /** @test */
+    function unauthenticated_users_may_not_add_replies()
+    {
+//        https://laracasts.com/series/lets-build-a-forum-with-laravel/episodes/4
+        $this->withExceptionHandling()
+            ->post('/threads/some-channel/1/replies', [])
+            ->assertRedirect('/login');
+    }
 
     /** @test */
     function an_authenticated_user_may_participate_in_forum_threads()
